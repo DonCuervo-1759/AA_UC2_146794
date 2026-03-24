@@ -90,6 +90,64 @@ public class Ordenamientos {
         }
     }
     
+        public static void OrdenamientoQuicksort(int[] arr, int inicio, int fin){
+            //Determina la particion del arreglo en donde comienza la iteracion
+            if(inicio < fin){
+                //Inicia la particion desde el pivote seleccionado comunmente
+                //se selecciona el indice final como pivote para empezar
+                int PivoteIndice = particion(arr, inicio, fin);
+                System.out.println("\nEl indicce del pivote esta en: " + PivoteIndice + ". Estado Actual del arreglo: " + Arrays.toString(arr));
+                
+                //Comienza la particion de la izquierda cuando hay dos particiones o mas
+                OrdenamientoQuicksort(arr, inicio, PivoteIndice -1);
+                System.out.println("\nIZQUIERDA. Pivote es: "+ PivoteIndice + " Estado actual del arreglo " + Arrays.toString(arr));
+                
+                //Comienza la particion de la derecha cuando hay dos particiones o mas
+                OrdenamientoQuicksort(arr, PivoteIndice +1, fin);
+                System.out.println("\nDERECHA. Pivote es: "+ PivoteIndice + " Estado actual del arreglo " + Arrays.toString(arr));
+            }
+        }
+        
+        //Aqui se hacen los intercambios entre valores de los indices
+        public static int particion(int[] arr, int inicio, int fin){
+            
+            //determina el indice final como el pivote para comenzar la particion inicial
+            //que seria todo el arreglo al inicio
+            int pivote = arr[fin];
+            
+            //"i" se tiene que dejar un indice menor al inicio para que no lo
+            //sobreescriba cuando ocurran cambios, ya que "i" es el que marca cual
+            //es el indice de menor valor dentro de la particion
+            int i = inicio - 1;
+            
+            //El "for" se encarga de recorrer la particion dentro del pivote
+            //sin contar dicho pivote, comparando los valores con este
+            //y cambiandolos si resultan ser menores al pivote
+            for(int j = inicio; j < fin; j++){
+                if(arr[j] < pivote){
+                    i++;
+                    
+                    //"i" se guardara como el valor que se considera como el minimo
+                    //en el arreglo por el momento hasta que se encuentre otro
+                    //durante la iteracion
+                    int temp = arr[i];
+                    arr[i] = arr[j];
+                    arr[j] = temp;
+                }
+                
+            }
+            
+            //al final de la iteracion, el valor del pivote sera movido al indice
+            //al frente de "i" ya que "i" determina cual es el indice de menor valor
+            //encontrado en la iteracion.
+            int temp = arr[i +1];
+            arr[i +1] = arr[fin];
+            arr[fin] = temp;
+            
+            return i + 1;
+        }
+    
+    
     public static void ImprimirArreglos(int[] arr){
         System.out.println(Arrays.toString(arr));
     }
